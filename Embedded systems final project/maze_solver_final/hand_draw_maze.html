@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		.b{
+			width: 20px;
+			height: 20px;
+			background: black;
+			margin-left: 5px;
+			border:1px;
+
+		}
+		button:focus {outline:0;}
+
+
+
+	</style>
+
+
+	<script>
+
+
+		path = 1;
+		md = 0;
+
+		function mouseDown(){
+			md=1;
+			console.log(""+md);
+		}
+
+		function mouseUp(){
+			md=0;
+			console.log(""+md);
+		}
+
+		function randDir() {
+			let dir = ['l','r','f'];
+			console.clear()
+			if (path % 2 == 0) console.log(dir[Math.floor(Math.random()*3)]);
+			path++;
+		}
+
+		function toggle(id, drag) {
+			if (drag && !md) return;
+			let curr = document.getElementById(id).style.background;
+			document.getElementById(id).style.background = (curr == "black") ? "white" : "black";
+		}
+
+
+		function gen(row) {
+			let i=0;
+			let j=0;
+			let html = "";
+		//	let row = document.getElementsByTagName("input")[0].value;
+
+			while (i<row){
+				while (j<row){
+					let id = i +","+ j;
+					html += "<button class=b id="+ id +" onmousedown=toggle('"+id+"',0);randDir() style=background:black></button>";
+					j++;
+				}
+				html+="<br>";
+				i++;
+				j=0;
+			}
+			document.getElementsByTagName('body')[0].innerHTML = "<center>"+html;
+			document.getElementsByTagName('body')[0].innerHTML += "<button onclick=list()>make list</button>";
+		}
+
+		function addHover() {
+			let i = 0;
+			while (i<1024){
+				let ele = document.getElementsByClassName('b')[i];
+				ele.onmouseover = function() {
+    				toggle(ele.id, 1)
+				}
+				i++;
+			}
+		}
+
+		function list(){
+			string = "{";
+			n = 0;
+			for (var i = 0; i < 32; i++) {
+				num ="";
+				for (var j = 0; j < 32; j++) {
+					//console.log(n + "");
+
+
+					num += (document.getElementsByClassName('b')[n].style.background == "white") ? "0" : "1";
+
+
+
+					n++;
+				}
+				num = parseInt(num, 2).toString(16);
+				string += "0x" + num.toUpperCase();
+				if (i != 31) string += ",";
+			}
+			string += "}";
+			console.log(string);
+		}
+
+
+
+
+	</script>
+</head>
+<body onload="gen(32);addHover();" onmousedown="mouseDown()" onmouseup="mouseUp()">
+	<input type="text"/><button onclick=gen()>gen</button>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+I made it so that the vertical velocity of the ball increased by a factor of
+0.05 with each collision with the paddle. The speed is reset to -4.0 at the
+beggining of each try. The maximum speed is set to 8.0 because I believe that
+is the highest speed that doesn't cause bugs with a 60Hz refresh rate.
+
+I added a score feature. The score increases every time a brick is destroyed.
+The higher up the brick, the larger the increment. The increment is also
+proportional to the speed.
+
+Last, I added sound effects using the provided wav files. I used the module
+random to select certain sounds.
